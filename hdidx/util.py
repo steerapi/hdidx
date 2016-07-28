@@ -59,8 +59,12 @@ try:
         criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER,
                     niter, 0.01)
         flags = cv2.KMEANS_RANDOM_CENTERS
-        compactness, labels, centers = cv2.kmeans(
-            vs, ks, criteria, 1, flags)
+        if cv2.__version__.startswith('2'):
+            compactness, labels, centers = cv2.kmeans(
+               vs, ks, criteria, 1, flags)
+        else:
+            compactness, labels, centers = cv2.kmeans(
+               vs, ks, None, criteria, 1, flags)
         return centers
 except ImportError:
     logging.warn("Cannot find OpenCV, using `kmeans` from SciPy instead.")
