@@ -18,7 +18,6 @@ import logging
 # distance
 from distance import distFunc
 import bottleneck
-from scipy.io import loadmat
 import numpy as np
 
 # profiling
@@ -52,10 +51,10 @@ def eigs(X, npca):
 KMeans
 """
 
-try:
-    import cv2
-
-    def kmeans(vs, ks, niter):
+    
+def kmeans(vs, ks, niter):
+    try:
+        import cv2
         criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER,
                     niter, 0.01)
         flags = cv2.KMEANS_RANDOM_CENTERS
@@ -66,14 +65,11 @@ try:
             compactness, labels, centers = cv2.kmeans(
                vs, ks, None, criteria, 1, flags)
         return centers
-except ImportError:
-    logging.warn("Cannot find OpenCV, using `kmeans` from SciPy instead.")
-    from scipy.cluster import vq
-
-    def kmeans(vs, ks, niter):
+    except ImportError:
+        logging.warn("Cannot find OpenCV, using `kmeans` from SciPy instead.")
+        from scipy.cluster import vq
         centers, labels = vq.kmeans2(vs, ks, niter)
         return centers
-
 
 # finding nearest neighbor
 
@@ -216,6 +212,8 @@ class Reader(object):
 
     def get_next(self):
         logging.info("Reader - load %d" % self.next_id)
+        from scipy.io import loadmat
+
         feat = loadmat(
             os.path.join(self.featdir, self.v_fname[self.next_id]))['feat']
         self.next_id += 1
