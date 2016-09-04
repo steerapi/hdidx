@@ -31,6 +31,14 @@ class MemStorage(Storage):
             self.codes = np.vstack((self.codes, codes))
         self.num_items += num_new_items
         return num_new_items
+    
+    def remove(self, keys):
+        to_delete = np.hstack([np.where(self.keys==k) for k in keys]).flatten()
+        num_remove_items = len(to_delete)
+        
+        self.keys = np.delete(self.keys, to_delete, 0)
+        self.codes = np.delete(self.codes, to_delete, 0)
+        self.num_items -= num_remove_items
 
     def __iter__(self):
         return itertools.izip(self.keys, self.vals)

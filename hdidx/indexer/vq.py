@@ -200,7 +200,9 @@ class IVFPQIndexer(PQIndexer):
         logging.info("Building indexes - DONE!")
 
     def remove(self, keys):
-        raise Exception(self.ERR_UNIMPL)
+        coarsek = self.encoder.ecdat['coarsek']
+        for ivfidx in xrange(coarsek):
+            self.storage[ivfidx].remove(keys)
 
     def search(self, queries, topk=None, **kwargs):
         nn_coa = kwargs.get('nn_coa', 8)

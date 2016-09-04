@@ -47,11 +47,13 @@ class Storage(object):
 
 from mem_storage import MemStorage
 from lmdb_storage import LMDBStorage
+# from dydb_storage import DYDBStorage
 
 
 STORAGE_DIC = {
     'mem':  MemStorage,
     'lmdb': LMDBStorage,
+    # 'dydb': DYDBStorage
 }
 
 
@@ -77,5 +79,15 @@ def createStorage(storage_type, storage_parm=None):
         else:
             env = lmdb.open(path, map_size=2**30, sync=False, max_dbs=1)
             return LMDBStorage(env, clear)
+    # elif storage_type == 'dydb':
+    #     tableName = storage_parm['tableName']
+    #     clear = storage_parm.get('clear', False)
+    #
+    #     # create inverted file storage
+    #     if num_idx > 0:
+    #         return [DYDBStorage(tableName, clear, i) for i in xrange(num_idx)]
+    #     # create normal storage
+    #     else:
+    #         return DYDBStorage(tableName, clear)
     else:
-        raise Exception('Wroing storage type: %s' % storage_type)
+        raise Exception('Wrong storage type: %s' % storage_type)

@@ -123,10 +123,7 @@ class TestPQNew(unittest.TestCase):
         # saving indexer to disk file
         idx.save('./test-tmp/hdidx_test_ivf_lmdb.info')
         # set backend storage
-        idx.set_storage('lmdb', {
-            'path': './test-tmp/hdidx_test_ivf_lmdb.idx',
-            'clear': True,
-        })
+        idx.set_storage()
         # indexing
         idx.add(self.vbase)
         # search
@@ -191,6 +188,24 @@ class TestPQNew(unittest.TestCase):
         idx.set_storage('mem', {})
 
         idx.add(self.vbase)
+        ids, dis = idx.search(self.vquery, topk=self.topk)
+        compute_stats(self.vquery.shape[0], self.ids_gnd, ids, self.topk)
+
+    def test_ivfpq_mem_remove(self):
+        """ Test IVFPQ: memory storage
+        """
+        idx = indexer.IVFPQIndexer()
+
+        idx.build({
+            'vals': self.vtrain,
+            'nsubq': self.nsubq,
+            'coarsek': self.coarsek,
+        })
+        idx.save('./test-tmp/hdidx_test_ivf_mem.info')
+        idx.set_storage('mem', {})
+
+        idx.add(self.vbase)
+        idx.remove(np.arange(len(self.vbase)))
         ids, dis = idx.search(self.vquery, topk=self.topk)
         compute_stats(self.vquery.shape[0], self.ids_gnd, ids, self.topk)
 
