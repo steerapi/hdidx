@@ -41,4 +41,4 @@ class MemStorage(Storage):
         self.num_items -= num_remove_items
 
     def __iter__(self):
-        return itertools.izip(self.keys, self.vals)
+        return zip(self.keys, self.vals)

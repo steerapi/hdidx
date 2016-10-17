@@ -13,3 +13,11 @@ temp/
 .idea/
 .ipynb_checkpoints/
 README.rst
+hdidx/_cext.so
+hdidx/_mih.so
+hdidx/storage/dydb_storage.py
+test-tmp/
+tests/test-tmp/
+tests/test_indexer_dydb.py
+venv/
+tests/hdidx/

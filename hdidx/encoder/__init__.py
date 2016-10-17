@@ -10,7 +10,7 @@
 DESCRIPTION = """
 """
 
-import cPickle as pickle
+import pickle as pickle
 
 
 class Encoder(object):
@@ -51,5 +51,5 @@ class Encoder(object):
         """
         raise Exception(self.ERR_INSTAN)
 
-from pq import PQEncoder, IVFPQEncoder
-from sh import SHEncoder
+from .pq import PQEncoder, IVFPQEncoder
+from .sh import SHEncoder

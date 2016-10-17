@@ -24,7 +24,7 @@ from hdidx.storage import createStorage
 import hdidx._cext as cext
 from hdidx import _mih as mih
 
-BIT_CNT_MAP = np.array([bin(i).count("1") for i in xrange(256)], np.uint16)
+BIT_CNT_MAP = np.array([bin(i).count("1") for i in range(256)], np.uint16)
 DEFAULT_HAMMING_ENCODER = "SHEncoder"
 
 
@@ -101,7 +101,7 @@ class SHIndexer(Indexer):
 
         Dh = np.zeros((npt1, npt2), np.uint16)
 
-        for i in xrange(npt1):
+        for i in range(npt1):
             Dh[i, :] = BIT_CNT_MAP[np.bitwise_xor(B1[i, :], B2)].sum(1)
 
         return Dh

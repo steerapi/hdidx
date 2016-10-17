@@ -38,15 +38,15 @@ class Storage(object):
     def __iter__(self):
         raise Exception("Instance of `Storage` is not allowed!")
 
-    def next(self):
+    def __next__(self):
         raise Exception("Instance of `Storage` is not allowed!")
 
     def clear(self):
         raise Exception("Instance of `Storage` is not allowed!")
 
 
-from mem_storage import MemStorage
-from lmdb_storage import LMDBStorage
+from .mem_storage import MemStorage
+from .lmdb_storage import LMDBStorage
 # from dydb_storage import DYDBStorage
 
 
@@ -63,7 +63,7 @@ def createStorage(storage_type, storage_parm=None):
     if storage_type == 'mem':
         # create inverted file storage
         if num_idx > 0:
-            return [MemStorage() for i in xrange(num_idx)]
+            return [MemStorage() for i in range(num_idx)]
         # create normal storage
         else:
             return MemStorage()
@@ -74,7 +74,7 @@ def createStorage(storage_type, storage_parm=None):
         # create inverted file storage
         if num_idx > 0:
             env = lmdb.open(path, map_size=2**30, sync=False, max_dbs=num_idx)
-            return [LMDBStorage(env, clear, i) for i in xrange(num_idx)]
+            return [LMDBStorage(env, clear, i) for i in range(num_idx)]
         # create normal storage
         else:
             env = lmdb.open(path, map_size=2**30, sync=False, max_dbs=1)

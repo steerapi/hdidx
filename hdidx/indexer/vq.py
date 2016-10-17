@@ -80,7 +80,7 @@ class PQIndexer(Indexer):
         interval = 100 if nq >= 100 else 10
         time_total = 0.0    # total time for all queries
         logging.info('Start Querying ...')
-        for qry_id in xrange(nq):
+        for qry_id in range(nq):
             profiler.start("distab")    # time for computing distance table
             # pre-compute the table of squared distance to centroids
             for qnt_id in range(nsubq):
@@ -193,7 +193,7 @@ class IVFPQIndexer(PQIndexer):
             cids, codes = self.encoder.encode(vals[start_id:end_id, :])
 
             coarsek = self.encoder.ecdat['coarsek']
-            for ivfidx in xrange(coarsek):
+            for ivfidx in range(coarsek):
                 self.storage[ivfidx].add(
                     codes[cids == ivfidx, :],
                     keys[start_id:end_id][cids == ivfidx])
@@ -201,7 +201,7 @@ class IVFPQIndexer(PQIndexer):
 
     def remove(self, keys):
         coarsek = self.encoder.ecdat['coarsek']
-        for ivfidx in xrange(coarsek):
+        for ivfidx in range(coarsek):
             self.storage[ivfidx].remove(keys)
 
     def search(self, queries, topk=None, **kwargs):
@@ -215,7 +215,7 @@ class IVFPQIndexer(PQIndexer):
         coa_centroids = self.encoder.ecdat['coa_centroids']
 
         centroids_l2norm = []
-        for i in xrange(nsubq):
+        for i in range(nsubq):
             centroids_l2norm.append((centroids[i] ** 2).sum(1))
         coa_centroids_l2norm = (coa_centroids ** 2).sum(1)
 
@@ -227,7 +227,7 @@ class IVFPQIndexer(PQIndexer):
         interval = 100 if nq >= 100 else 10
         time_total = 0.0    # total time for all queries
         logging.info('Start Querying ...')
-        for qry_id in xrange(nq):
+        for qry_id in range(nq):
             # Here `copy()` can ensure that you DONOT modify the queries
             query = queries[qry_id:qry_id+1, :].copy()
             profiler.start("coa_knn")

@@ -10,7 +10,7 @@
 DESCRIPTION = """
 """
 
-import cPickle as pickle
+import pickle as pickle
 from struct import pack, unpack
 import numpy as np
 
@@ -114,7 +114,7 @@ class LMDBStorage(MemStorage):
 
     def add(self, codes, keys):
         num_new_items = MemStorage.add(self, codes, keys)
-        for idx in xrange(num_new_items):
+        for idx in range(num_new_items):
             self.db.setki(keys[idx], pickle.dumps(codes[idx], protocol=2))
 
     def clear(self):

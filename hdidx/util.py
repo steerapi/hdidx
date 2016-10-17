@@ -16,7 +16,7 @@ DESCRIPTION = """
 import os
 import logging
 # distance
-from distance import distFunc
+from .distance import distFunc
 import bottleneck
 import numpy as np
 
@@ -156,13 +156,13 @@ class Profiler(object):
         """
         Return the sum of overall time costs for each code snippet.
         """
-        return sum([rec.time for name, rec in self.records.iteritems()])
+        return sum([rec.time for name, rec in self.records.items()])
 
     def sum_average(self):
         """
         Return the sum of average time costs for each code snippet.
         """
-        return sum([rec.average() for name, rec in self.records.iteritems()])
+        return sum([rec.average() for name, rec in self.records.items()])
 
     def str_overall(self, fmt="%s: %.3fms"):
         """
@@ -170,14 +170,14 @@ class Profiler(object):
         """
 
         return ";\t".join([fmt % (name, rec.time * 1000)
-                           for name, rec in self.records.iteritems()])
+                           for name, rec in self.records.items()])
 
     def str_average(self, fmt="%s: %.3fms"):
         """
         Return the average time costs for each code snippet as string.
         """
         return ";\t".join([fmt % (name, rec.average() * 1000)
-                           for name, rec in self.records.iteritems()])
+                           for name, rec in self.records.items()])
 
     def reset(self):
         """

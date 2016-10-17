@@ -9,7 +9,7 @@
 """
 DESCRIPTION = """
 """
-import indexer
-import encoder
-import storage
-import distance
+from . import indexer
+from . import encoder
+from . import storage
+from . import distance

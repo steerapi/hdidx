@@ -54,7 +54,7 @@ class SHEncoder(Encoder):
         nModes = maxMode.sum() - maxMode.size + 1
         modes = np.ones((nModes, npca))
         m = 0
-        for i in xrange(npca):
+        for i in range(npca):
             modes[m+1:m+maxMode[i], i] = np.arange(1, maxMode[i]) + 1
             m = m + maxMode[i] - 1
         modes = modes - 1
@@ -81,7 +81,7 @@ class SHEncoder(Encoder):
         nSamples, nbits = b.shape
         nwords = (nbits + 7) / 8
         B = np.hstack([np.packbits(b[:, i*8:(i+1)*8][:, ::-1], 1)
-                       for i in xrange(nwords)])
+                       for i in range(nwords)])
         residue = nbits % 8
         if residue != 0:
             B[:, -1] = np.right_shift(B[:, -1], 8 - residue)
